@@ -1,5 +1,3 @@
-//famousFormations
-
 
 searchMenu = document.getElementById("searchMenuWrapper")
 setupSearchMenu()
@@ -7,12 +5,12 @@ searchMenu.parentElement.removeChild(searchMenu)
 submitButton = document.getElementById("submitButton")
 setupSubmitButton()
 submitButton.parentElement.removeChild(submitButton)
-players = null
-formation = null
-lastRow = null
-formationData = null
+players = undefined
+formation = undefined
+lastRow = undefined
+formationData = undefined
 
-formationData = null
+formationData = undefined
 fetch("/dailyFormation").then(response => response.json()).then(function(data) {
     formationData = data
     startPuzzle(formationData)
