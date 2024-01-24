@@ -8,7 +8,9 @@ players = undefined
 formation = undefined
 lastRow = undefined
 formationData = undefined
-dailyPlayerList = localStorage.getItem("dailyPlayerList").split(",")
+dailyPlayerList = localStorage.getItem("dailyPlayerList")
+if (dailyPlayerList != undefined)
+    dailyPlayerList.split(",")
 
 fetchDailyFormation()
 resetAtMidnight()
