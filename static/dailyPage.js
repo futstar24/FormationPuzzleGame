@@ -9,15 +9,38 @@ formation = undefined
 lastRow = undefined
 formationData = undefined
 
-formationData = undefined
-
 fetchDailyFormation()
+//Reset at midnight 
+
+resetAtMidnight()
+
+function resetAtMidnight() {
+    var now = new Date();
+    night = new Date(); 
+    night.setDate(new Date().getDate()+1)
+    night.setHours(0)
+    night.setMinutes(0)
+    night.setSeconds(5)
+    night.setMilliseconds(0)
+    msToMidnight = night.getTime() - now.getTime();
+    setTimeout(function() {
+      resetDaily();
+      resetAtMidnight();
+    }, msToMidnight);
+};
+
 
 document.body.addEventListener("click", function(evt) {
+    console.log("click")
     if (!searchMenu.contains(evt.target) && !evt.target.classList.contains("formationPosition") && !evt.target.classList.contains("positionText") && document.body.contains(searchMenu)) {
         searchMenu.parentElement.removeChild(searchMenu)
     }
 })
+
+function resetDaily() {
+    console.log("reloading")
+    location.reload()
+}
 
 function fetchDailyFormation() {
     fetch("/dailyFormation").then(response => response.json()).then(function(data) {
@@ -29,6 +52,9 @@ function fetchDailyFormation() {
 
 function startPuzzle(formationData) {
 
+    document.getElementById("formationSetup").parentElement.removeChild(document.getElementById("formationSetup"))
+    formationSetup = document.createElement("div")
+    formationSetup.id = "formationSetup"
     formation = formationData["formation"]
     formation.reverse()
     formation.push(1)
@@ -41,11 +67,13 @@ function startPuzzle(formationData) {
         if (i == formation.length-1) {
             isLastRow = true
         }
-        positionNumber = createFormationRow(formation[i],isLastRow,positionNumber)
+        positionNumber = createFormationRow(formation[i],isLastRow,positionNumber,formationSetup)
     }
+    formationWindow.appendChild(formationSetup)
+    setupPositions()
 }
 
-function createFormationRow(numItems,isLastRow,positionNumber) {
+function createFormationRow(numItems,isLastRow,positionNumber,formationSetup) {
     row = document.createElement("div")
     row.classList.add("formationRow")
     spaceBetweenRows = 10
@@ -81,7 +109,6 @@ function createFormationRow(numItems,isLastRow,positionNumber) {
     } else {
         lastRow = row
     }
-    setupPositions()
     return positionNumber
 }
 
