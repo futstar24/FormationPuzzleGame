@@ -1,4 +1,3 @@
-
 searchMenu = document.getElementById("searchMenuWrapper")
 setupSearchMenu()
 searchMenu.parentElement.removeChild(searchMenu)
@@ -11,16 +10,22 @@ lastRow = undefined
 formationData = undefined
 
 formationData = undefined
-fetch("/dailyFormation").then(response => response.json()).then(function(data) {
-    formationData = data
-    startPuzzle(formationData)
-})
+
+fetchDailyFormation()
 
 document.body.addEventListener("click", function(evt) {
     if (!searchMenu.contains(evt.target) && !evt.target.classList.contains("formationPosition") && !evt.target.classList.contains("positionText") && document.body.contains(searchMenu)) {
         searchMenu.parentElement.removeChild(searchMenu)
     }
 })
+
+function fetchDailyFormation() {
+    fetch("/dailyFormation").then(response => response.json()).then(function(data) {
+        formationData = data
+        console.log(formationData["randomNumber"])
+        startPuzzle(formationData)
+    })
+}
 
 function startPuzzle(formationData) {
 

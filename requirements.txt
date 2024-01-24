@@ -1,2 +1,4 @@
 flask
 gunicorn
+apscheduler.schedulers.background
+apscheduler.triggers.cron
