@@ -8,10 +8,9 @@ players = undefined
 formation = undefined
 lastRow = undefined
 formationData = undefined
+dailyPlayerList = localStorage.getItem("dailyPlayerList").split(",")
 
 fetchDailyFormation()
-//Reset at midnight 
-
 resetAtMidnight()
 
 function resetAtMidnight() {
@@ -31,7 +30,6 @@ function resetAtMidnight() {
 
 
 document.body.addEventListener("click", function(evt) {
-    console.log("click")
     if (!searchMenu.contains(evt.target) && !evt.target.classList.contains("formationPosition") && !evt.target.classList.contains("positionText") && document.body.contains(searchMenu)) {
         searchMenu.parentElement.removeChild(searchMenu)
     }
@@ -39,6 +37,7 @@ document.body.addEventListener("click", function(evt) {
 
 function resetDaily() {
     console.log("reloading")
+    localStorage.setItem("dailyPlayerList",undefined)
     location.reload()
 }
 
@@ -97,6 +96,9 @@ function createFormationRow(numItems,isLastRow,positionNumber,formationSetup) {
         text = document.createElement("p")
         text.classList.add("positionText")
         text.id = "position"+positionNumber
+        if (dailyPlayerList != undefined) {
+            text.innerHTML = dailyPlayerList[positionNumber]
+        }
         positionNumber+=1
         position.appendChild(text)
         row.appendChild(position)
@@ -162,11 +164,15 @@ function resetResults() {
 
 function checkIfSubmittable() {
     counter = 0
+    playerList = []
     Array.from(document.getElementsByClassName("positionText")).forEach(playerName => {
+        playerList.push(playerName.innerHTML)
         if (playerName.innerHTML != "") {
             counter+=1
         }
     })
+    localStorage.setItem("dailyPlayerList",playerList)
+    console.log(playerList)
     if (counter == 11) {
 
         lastRow.appendChild(submitButton)
