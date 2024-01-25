@@ -1,5 +1,6 @@
 searchMenu = document.getElementById("searchMenuWrapper")
 actualSearchMenu = document.getElementById("searchMenu")
+actualSearchMenu.style.cssText = "position: absolute;width: 50vh; height: 76vh; top: 13%;background-color: black;opacity: 0.93; overflow:scroll;"
 setupSearchMenu()
 searchMenu.parentElement.removeChild(searchMenu)
 submitButton = document.getElementById("submitButton")
@@ -109,30 +110,57 @@ function addPositionClick(position) {
 }
 
 function resetAndReload() {
-    resetResults()
     reloadResults()
 }
 
 function reloadResults() {
+
+    Array.from(actualSearchMenu.children).forEach(child => {
+        if (child.id.includes("result") || child.id.includes("spacer")) {
+            child.parentElement.removeChild(child)
+        }
+    })
+    
     filledSpots = 0
+
     //change to be full player list, from api?
-    players.toSorted().every(player => {
+    players.toSorted().forEach(player => {
         if (player.toLowerCase().includes(searchPlayers.value.toLowerCase())) {
-            document.getElementById("player"+filledSpots).innerHTML = player
+            searchResult = document.createElement("div")
+            searchResult.classList.add("searchResult")
+            searchResult.classList.add("playerSearchResult")
+            searchResult.id = "result"+filledSpots
+            searchResultText = document.createElement("p")
+            searchResultText.classList.add("playerNameText")
+            searchResultText.id = "player"+filledSpots
+            searchResultText.innerHTML = player
+            searchResult.appendChild(searchResultText)
+            actualSearchMenu.appendChild(searchResult)
+            spacer = document.createElement("div")
+            spacer.classList.add("searchSpacer")
+            spacer.id = "spacer"+filledSpots
+            actualSearchMenu.appendChild(spacer)
+
             filledSpots += 1
         }
-        if (filledSpots == 10) {
-            return false
-        } else if (filledSpots == 0) {
-            document.getElementById("player0").innerHTML = "No players found."
-        }
-        return true
     })
-}
-
-function resetResults() {
-    for (var i = 0; i < 10; i++) {
-        document.getElementById("player"+i).innerHTML = ""
+    if (filledSpots == 0) {
+        searchResult = document.createElement("div")
+        searchResult.classList.add("searchResult")
+        searchResult.classList.add("playerSearchResult")
+        searchResult.id = "result"+filledSpots
+        searchResultText = document.createElement("p")
+        searchResultText.classList.add("playerNameText")
+        searchResultText.id = "player"+filledSpots
+        searchResultText.innerHTML = "No players found."
+        searchResult.appendChild(searchResultText)
+        actualSearchMenu.appendChild(searchResult)
+        spacer = document.createElement("div")
+        spacer.classList.add("searchSpacer")
+        spacer.id = "spacer"+filledSpots
+        actualSearchMenu.appendChild(spacer)
+    } else {
+        setupSearchMenu()
     }
 }
 
@@ -154,16 +182,13 @@ function checkIfSubmittable() {
 }
 
 function setupSearchMenu() {
-    actualSearchMenu.style.cssText = "position: absolute;width: 50vh;height: 76vh;top: 8%;background-color: black;opacity: 0.9;"
     Array.from(document.getElementsByClassName("playerSearchResult")).forEach(searchResult => {
         searchResult.addEventListener("click", function() {
             player = searchResult.children.item(0).innerHTML
-            if (player != "" && player != "No players found.") {
-                selectedPlayer = searchResult.children.item(0).innerHTML
-                selectedPosition.children.item(0).innerHTML = selectedPlayer
-                checkIfSubmittable()
-                searchMenu.parentElement.removeChild(searchMenu)
-            }
+            selectedPlayer = searchResult.children.item(0).innerHTML
+            selectedPosition.children.item(0).innerHTML = selectedPlayer
+            checkIfSubmittable()
+            searchMenu.parentElement.removeChild(searchMenu)
         })
     })
 }
