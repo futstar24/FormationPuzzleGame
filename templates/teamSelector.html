@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <title>Famous Formations</title>
+</head>
+
+<body>
+    <p class = "titleText">Famous Formations</p>
+    <div id = "teamPageWrapper" class="wrapper selectionPage">
+        <input class = "searchBox" id = "teamSearch" placeholder="Search for any team..."></input>
+        <div id = "teamResults"></div>
+    </div>
+    <form id = "selectTeam"></form>
+    
+    <script src="{{url_for('static', filename='teamSelector.js')}}"></script>
+</body>
+
+</html>
