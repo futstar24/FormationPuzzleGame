@@ -38,6 +38,7 @@ function fetchDailyFormation() {
     fetch("/dailyFormation").then(response => response.json()).then(function(data) {
         formationData = data
         console.log(formationData["randomNumber"])
+        document.getElementById("gameName").innerHTML = formationData["tie"]
         startPuzzle(formationData)
     })
 }

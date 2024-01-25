@@ -34,7 +34,8 @@ function createSearchResults(games) {
         gameItemText.classList.add("gameItemText")
         gameItemText.classList.add("selectorSearchItemText")
         gameItemText.id = game[8]
-        gameItemText.innerHTML = game[1]
+        gameDate = game[3].join("/")
+        gameItemText.innerHTML = game[2]+"<br><br>"+game[0]+"<br>---<br>"+game[1]+"<br><br>"+gameDate
         gameItem.appendChild(gameItemText)
         gameRow.appendChild(gameItem)
         itemNumber+=1
