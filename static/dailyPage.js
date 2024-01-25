@@ -1,6 +1,6 @@
 dailyPlayerList = localStorage.getItem("dailyPlayerList")
 
-if (dailyPlayerList != "") {
+if (dailyPlayerList != "" && dailyPlayerList != null) {
     dailyPlayerList = dailyPlayerList.split(",")
 } else {
     localStorage.setItem("dailyPlayerList","")
