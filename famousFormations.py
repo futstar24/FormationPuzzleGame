@@ -57,7 +57,7 @@ def createPlayers(formations):
 def waltersList():
 
     #teamName, opponentName, score (as list [teamName, opponentName]), gameTitle, gameDate (list of day month year), lineup, bench, manager, formation (as list), empty quotes
-    formations = [Formation()
+    formations = [Formation("Manchester City","Inter Milan",[2,1],"The Champions!!!!",[6,10,2023],["Erling Haaland","Kevin De Bruyne","Ilkay Gundogan","Jack Grealish","Rodri","John Stones","Bernardo Silva","Ruben Dias","Nathan Ake","Manuel Akanji","Ederson"],["Scott Carson","Stefan Ortega","Aymeric Laporte","Sergio Gomez","Rico Lewis","Kyle Walker","Maximo Perrone","Kalvin Phillips","Cole Palmer","Phil Foden","Riyad Mahrez","Julian Alvarez"],"Pep Guardiola",[3,4,2,1],""),
 
     ]
 
