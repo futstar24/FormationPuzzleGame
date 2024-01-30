@@ -43,7 +43,7 @@ def home():
 @app.route("/dailyFormation", methods = ["GET"])
 def dailyFormation():
     formation = formations[randomNum]
-    return {"team":formation.team,"opposition":formation.opposition,"tie":formation.tie,"date":formation.date,"lineup":formation.lineup,"bench":formation.bench, "manager":formation.manager,"formation":formation.formation,"randomNumber":randomNum}
+    return {"team":formation.team,"opposition":formation.opposition,"score":formation.score,"tie":formation.tie,"date":formation.date,"lineup":formation.lineup,"bench":formation.bench, "manager":formation.manager,"formation":formation.formation,"randomNumber":randomNum}
 
 @app.route("/teamSelector", methods = ["GET"])
 def teamSelector():
@@ -77,7 +77,7 @@ def sendGames(teamName):
     teamFormations = teams[teamName]
     result = []
     for formation in teamFormations:
-        result.append([formation.team,formation.opposition,formation.tie,formation.date,formation.lineup,formation.bench,formation.manager,formation.formation,formation.id])
+        result.append([formation.team,formation.opposition,formation.score,formation.tie,formation.date,formation.lineup,formation.bench,formation.manager,formation.formation,formation.id])
     return {"result":result}
 
 @app.route("/sendGameInfo", methods = ["GET"])
@@ -88,7 +88,7 @@ def sendGameId():
         print("looping")
         if currentGameId in formation.id:
             print("returning")
-            return {"team":formation.team,"opposition":formation.opposition,"tie":formation.tie,"date":formation.date,"lineup":formation.lineup,"bench":formation.bench, "manager":formation.manager,"formation":formation.formation}
+            return {"team":formation.team,"opposition":formation.opposition,"score":formation.score,"tie":formation.tie,"date":formation.date,"lineup":formation.lineup,"bench":formation.bench, "manager":formation.manager,"formation":formation.formation}
 
 @app.route("/sendPlayers", methods = ["GET"])
 def sendPlayers():
